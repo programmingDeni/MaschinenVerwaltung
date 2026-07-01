@@ -4,6 +4,7 @@
     "module": "ESNext",
     "strict": true,
     "moduleResolution": "Bundler",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "baseUrl": ".",
   }
 }
