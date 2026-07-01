@@ -1,0 +1,16 @@
+{
+  "name": "maschinenverwaltung",
+  "version": "1.0.0",
+  "description": "",
+  "packageManager": "pnpm@10.16.1",
+  "scripts": {
+    "dev:web": "pnpm --filter web start:dev",
+    "dev:api": "pnpm --filter api start:dev",
+    "dev": "pnpm -r --parallel dev",
+    "build": "pnpm -r build",
+    "lint": "pnpm -r lint"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
