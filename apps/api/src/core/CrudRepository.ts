@@ -1,27 +1,54 @@
-import { CrudModel } from './CrudModel';
+import { CrudModel, CrudFindManyArgs, CrudWhereUnique } from './CrudModel';
+
 export class CrudRepository<
-    TEntity,
-    TId,
-    TCreate,
-    TUpdate
+  TEntity,
+  TId,
+  TCreate,
+  TUpdate,
+  TFindManyArgs = CrudFindManyArgs,
+  TWhereUnique = CrudWhereUnique<TId>,
 > {
+  constructor(
+    protected readonly model: CrudModel<
+      TEntity,
+      TId,
+      TCreate,
+      TUpdate,
+      TFindManyArgs,
+      TWhereUnique
+    >,
+  ) {}
 
-    constructor(
-        protected readonly model: CrudModel<
-            TEntity,
-            TId,
-            TCreate,
-            TUpdate
-        >
-    ) {}
+  findMany(args?: TFindManyArgs): Promise<TEntity[]> {
+    return this.model.findMany(args);
+  }
 
-    findMany() {}
+  findUnique(id: TId): Promise<TEntity | null> {
+    return this.model.findUnique({
+      where: this.createWhereUnique(id),
+    });
+  }
 
-    findUnique(id: TId) {}
+  create(dto: TCreate): Promise<TEntity> {
+    return this.model.create({
+      data: dto,
+    });
+  }
 
-    create(dto: TCreate) {}
+  update(id: TId, dto: TUpdate): Promise<TEntity> {
+    return this.model.update({
+      where: this.createWhereUnique(id),
+      data: dto,
+    });
+  }
 
-    update(id: TId, dto: TUpdate) {}
+  delete(id: TId): Promise<TEntity> {
+    return this.model.delete({
+      where: this.createWhereUnique(id),
+    });
+  }
 
-    delete(id: TId) {}
+  private createWhereUnique(id: TId): TWhereUnique {
+    return { id } as TWhereUnique;
+  }
 }

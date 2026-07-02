@@ -1,28 +1,42 @@
-import {CrudService} from './CrudService';
+import { CrudFindManyArgs, CrudWhereUnique } from './CrudModel';
+import { CrudService } from './CrudService';
+
 export abstract class CrudController<
-    TEntity,
-    TId,
-    TCreate,
-    TUpdate
+  TEntity,
+  TId,
+  TCreate,
+  TUpdate,
+  TFindManyArgs = CrudFindManyArgs,
+  TWhereUnique = CrudWhereUnique<TId>,
 > {
+  constructor(
+    protected readonly service: CrudService<
+      TEntity,
+      TId,
+      TCreate,
+      TUpdate,
+      TFindManyArgs,
+      TWhereUnique
+    >,
+  ) {}
 
-    constructor(
-        protected readonly service:
-            CrudService<
-                TEntity,
-                TId,
-                TCreate,
-                TUpdate
-            >
-    ) {}
+  findMany(args?: TFindManyArgs): Promise<TEntity[]> {
+    return this.service.findMany(args);
+  }
 
-    findMany() {}
+  findUnique(id: TId): Promise<TEntity | null> {
+    return this.service.findUnique(id);
+  }
 
-    findUnique() {}
+  create(dto: TCreate): Promise<TEntity> {
+    return this.service.create(dto);
+  }
 
-    create() {}
+  update(id: TId, dto: TUpdate): Promise<TEntity> {
+    return this.service.update(id, dto);
+  }
 
-    update() {}
-
-    delete() {}
+  delete(id: TId): Promise<TEntity> {
+    return this.service.delete(id);
+  }
 }

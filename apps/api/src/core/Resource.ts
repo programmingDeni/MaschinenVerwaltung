@@ -1,23 +1,22 @@
-import { CrudModel } from './CrudModel';
+import { CrudFindManyArgs, CrudModel, CrudWhereUnique } from './CrudModel';
+
+export interface ResourceSchema<TValue> {
+  parse(data: unknown): TValue;
+}
 
 export interface Resource<
-    TEntity,
-    TId,
-    TCreate,
-    TUpdate
+  TEntity,
+  TId,
+  TCreate,
+  TUpdate,
+  TFindManyArgs = CrudFindManyArgs,
+  TWhereUnique = CrudWhereUnique<TId>,
 > {
+  name: string;
 
-    name: string;
+  model: CrudModel<TEntity, TId, TCreate, TUpdate, TFindManyArgs, TWhereUnique>;
 
-    model: CrudModel<
-        TEntity,
-        TId,
-        TCreate,
-        TUpdate
-    >;
+  createSchema?: ResourceSchema<TCreate>;
 
-    createSchema: unknown;
-
-    updateSchema: unknown;
-
+  updateSchema?: ResourceSchema<TUpdate>;
 }
