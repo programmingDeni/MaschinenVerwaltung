@@ -1,10 +1,11 @@
 import { CrudFindManyArgs, CrudModel } from '@/core/CrudModel';
 import {
-  CreateMachineDto,
-  createMachineResource,
   Machine,
+} from './model.machine';
+import {
+    CreateMachineDto,
   UpdateMachineDto,
-} from './machine';
+} from "./dto.machine";
 
 class InMemoryMachineModel implements CrudModel<
   Machine,

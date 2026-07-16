@@ -1,6 +1,6 @@
 import { CrudModel, CrudFindManyArgs, CrudWhereUnique } from './CrudModel';
 
-export class CrudRepository<
+export abstract class CrudRepository<
   TEntity,
   TId,
   TCreate,
@@ -9,15 +9,14 @@ export class CrudRepository<
   TWhereUnique = CrudWhereUnique<TId>,
 > {
   constructor(
-    protected readonly model: CrudModel<
-      TEntity,
-      TId,
-      TCreate,
-      TUpdate,
-      TFindManyArgs,
-      TWhereUnique
-    >,
-  ) {}
+  protected readonly model: CrudModel<
+    TEntity,
+    TId,
+    TCreate,
+    TUpdate,
+    TFindManyArgs,
+    TWhereUnique
+  >){}
 
   findMany(args?: TFindManyArgs): Promise<TEntity[]> {
     return this.model.findMany(args);
